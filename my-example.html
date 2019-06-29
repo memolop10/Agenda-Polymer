@@ -1,0 +1,158 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+
+<dom-module id="my-example">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .userAgenda{
+              display: flex;
+              justify-content: space-between;
+            }
+
+            .datosContainer{
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+            }
+            .userData{
+              font-weight: 600;
+              display: flex;
+              align-items: center;
+            }
+            .imgAgenda{
+              width: 60px;
+              height:60px;
+              background-image: url('./asset/gokuShadow.jpg');
+              background-repeat: no-repeat;
+              background-size: cover
+            }
+            .btns{
+              display: flex;
+              align-items: center;
+              margin-left: 40%;
+            }
+
+            .btnEdit{
+              margin-right: 10px; 
+              height: 25px;
+              width: 60px;
+              border-radius: 40px;
+            }
+
+            .btnDelete{
+              margin-right: 10px;
+              height: 25px;
+              width: 60px;
+              border-radius: 40px;
+            }
+    </style>
+
+
+     <dom-repeat id="repetir" items="[[Data]]" as="celulares">
+       <template>
+         <div class="userAgenda">
+
+          <div class="datosContainer">
+              <span on-click="_nameMayuscula" class="userData">
+                  {{celulares.name}} 
+              </span>
+
+              <span class="userData">
+                  [[_formatCellPhone(celulares.phon)]]
+              </span>
+          </div>
+
+          <div class="btns">
+            <button class="btnEdit">editar</button>
+            <button class="btnDelete">eliminar</button>
+          </div>
+
+          <div class="imgAgenda"></div>
+        </div>
+        <hr/>
+       </template>
+     </dom-repeat>
+  </template>
+
+  <script>
+    /**
+     * `my-example`
+     * my-example
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class MyExample extends Polymer.Element {
+      static get is() { return 'my-example'; }
+      static get properties() {
+        var data = [
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668346'},
+          {name:'Guillermo', phon:'55668345'}
+          ];
+        return {
+
+          Data: {
+            type: Array,
+            notify: true,
+            value: data
+          }
+          // phoness: {
+          //   type: Array,
+          //   notify: true
+          // }
+        };
+       
+        }
+        ready(){
+          super.ready();
+        }
+          _nameMayuscula(){
+            console.log(this.Data)
+            console.log(this.Data['0']);
+            
+            var list = this.Data['0'];
+            console.log(list.name.toUpperCase());
+            this.set('',this.list.name.toUpperCase());
+          } 
+
+         _formatCellPhone(hola) {
+            var value = hola;
+            var splits = value.split(" ");
+
+            if (splits.length > 1) {
+            value = splits[splits.length - 1];
+            }
+            var finalValue = "";
+
+            for (var i = 0; i < value.length; i++) {
+            if (i % 2 == 0 && i != 0) {
+            finalValue = finalValue + ' ';
+            }
+            finalValue = finalValue + value.charAt(i);
+            }
+
+            if (splits.length > 1) {
+            splits.splice(splits.length - 1);
+            var concat = splits.concat(finalValue);
+            finalValue = concat.join()
+            }
+            return finalValue.substring(0, finalValue.length);
+            }
+      }
+    
+    window.customElements.define(MyExample.is, MyExample);
+  </script>
+</dom-module>
